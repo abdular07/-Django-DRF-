@@ -73,15 +73,20 @@ class TaskView(APIView):
     
 class TaskCSVDownload(APIView):
     def get(self, request):
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="tasks.csv"'
+       
+       response = HttpResponse(content_type='text/csv')
+       
+       response['Content-Disposition'] = 'attachment; filename="tasks.csv"'
 
-        writer = csv.writer(response)
-        writer.writerow(['ID', 'Title', 'Description', 'Created At', 'Updated At'])
+       writer = csv.writer(response)
+      
+       writer.writerow(['ID', 'Title', 'Description', 'Created At', 'Updated At'])
 
-        tasks = Task.objects.values_list('id', 'title', 'description', 'created_at', 'updated_at')
-        for task in tasks:
-            writer.writerow(task)
+       tasks = Task.objects.values_list('id', 'title', 'description', 'created_at', 'updated_at')
+       
+       for task in tasks:
+           
+          writer.writerow(task)
 
         return response
 
